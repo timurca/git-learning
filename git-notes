@@ -1,0 +1,199 @@
+COMMIT
+--------
+git init
+git status
+....
+git add file.txt (stage) | git add .  | git add *.html
+git commit
+
+	i (insert mode)
+	enter comments
+	esc :wq
+
+git status
+...
+git commit -m 'update 2'  (bypass vim screen 7-10)
+git log (see commits)
+
+
+BRANCHING
+-------------
+git branch work or git checkout -b work (create new branch)
+git checkout work
+...
+git add .
+git commit - m 'story is done'
+git checkout master
+
+git branch (shows all branches)
+git branch -D bugfix (delete branch)
+
+MERGING
+--------------
+
+	master = destination
+	MR-4230 = source
+	must be in master branch before starting to merge
+	
+git checkout master 
+git status (make sure you're on master)
+git merge MR-4230
+
+
+REVERTING
+---------------
+
+git log
+git checkout commitID
+
+git checkout -b old-state commitID (place vion in a branch)
+
+
+ADD & REMOVE files
+--------------------
+
+git rm file1.txt
+git commit -m "remove file1.txt"
+
+touch newfile.html
+
+
+PUSH to GITHUB 
+---------------------
+git remote add origin git@github.com:timurca/repoName  (Staging)
+git push -u origin master
+
+
+
+GITHUB (first tine SSH keys pairing)
+-------------------------------------
+pwd
+cd ~/.ssh
+ssh-keygen -t rsa -C 'timur.ochakovsky@gmail.com' (Generating public/private rsa key pair.)
+
+git_rsa (Enter file in which to save the key)
+enter
+enter
+
+cat git_rsa.pub (cat git_rsa.pub | pbcopy)
+(paste in github.com SSH keys)
+
+TEST
+ssh-add git_rsa (add identity)
+ssh -T git@github.com (test connection)
+
+
+GO to your REPO
+cd ~/Desktop
+git remote add origin git@github.com:timurca/repoName  (Staging)
+git push -u origin master
+
+
+
+GIT COMMANDS REVIEW
+--------------------
+pwd
+cd ~/Desktop
+cat filename
+
+
+	status   = which branch you are in + list of all branches
+	log      = view commits
+	touch    = create new file
+	branch   = create new branch
+	checkout = change branches
+
+	git branch -D branchname = delete a branch
+	git checkout -b branch_name  = create a new branch and checkout there
+
+	git log --oneline
+	git remote -v (see remote branches. v is for verbose.)
+
+
+
+
+Check for SSH KEYS
+------------------
+
+Github SSH public key
+curl https://github.com/timurca.keys
+https://github.com/timurca.keys
+
+
+
+FETCHING
+----------------------------
+Local Repo consists of:
+1) Local branches
+2) Remote tracking branches  origin/
+
+git branch -r (see remote traching branches)
+
+fetching from github goes to 2) which later needs to be merged to 1)
+
+get fetch (github-url)
+git branch -r
+git checkout origin/master (see if whatever you saved is there)
+git checkout master
+git merge origin/master
+_________________________________
+Git pull = git fetch + git merge
+__________________________________
+
+git checkout -b newbranch (create a new branch and go there)
+
+
+
+
+GIT LOGIC
+------------
+
+Repository
+------------------------------------
+Commited Files----------------------
+Staged Files------------------------
+Untracked Files & Unstaged Changes--
+------------------------------------		
+
+Unstanged & Staged Files show on ALL the branches
+Commited Files Show ONLY on their branches
+
+
+git remote -v
+origin	git@github.com:timurca/hello-world-from-local.git (fetch)
+origin	git@github.com:timurca/hello-world-from-local.git (push)
+
+
+Push
+-----
+Local Repository >> Remote Repository
+
+git push origin = git push 
+git push origin <branch-name>
+
+
+
+
+fast-forward merging
+---------------------------
+To Resolve Conflict
+---------------------------
+vi filename
+HEAD >>> is pointer to the branch you're in
+
+git log --oneline
+
+
+
+
+
+Rebasing
+---------------------------
+'git rebase' is all about changing the start point of a branch.
+
+if you updated wip branch and updated master, to do a fast forward merge you have to rebase the latest master to wip and when merge wip to master:
+
+git checkout wip
+git rebase master (updates wip branch with latest master)
+git checkout master
+git merge wip
