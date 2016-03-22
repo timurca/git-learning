@@ -197,3 +197,19 @@ git checkout wip
 git rebase master (updates wip branch with latest master)
 git checkout master
 git merge wip
+
+
+
+Do NOT Track Files
+------------------------------------
+touch .gitignore (create .gitignore)
+vi .gitignore
+	i
+	*.log
+	save
+
+
+git commit -a -m "v2"  (skip staging. works only on files already tracked)
+...
+git stash apply
+git remote
